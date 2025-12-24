@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AV Aluminum Truss Systems | Professional Rigging</title>
+    <style>
+        /* --- Variables & Reset --- */
+        :root {
+            /* Professional Blue/Gray Scheme */
+            --primary-blue: #0f4c81; /* Classic Blue */
+            --dark-blue: #1b2631;
+            --tech-blue: #3498db;
+            --metal-gray: #eaeded;
+            --text-main: #2c3e50;
+            --text-light: #7f8c8d;
+            --white: #ffffff;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main);
+            background-color: var(--white);
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; }
+        ul { list-style: none; }
+
+        /* --- Navbar --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: var(--white);
+            border-bottom: 1px solid #e1e1e1;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--dark-blue);
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+        .brand span { color: var(--tech-blue); }
+
+        .cta-btn {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .cta-btn:hover { background-color: var(--dark-blue); }
+
+        /* --- Hero --- */
+        .hero {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, var(--primary-blue) 100%);
+            color: var(--white);
+            padding: 6rem 5%;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            color: #dbeaf9;
+        }
+
+        .specs-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        /* --- Truss Types Grid --- */
+        .container { padding: 5rem 5%; }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-header h2 {
+            font-size: 2.2rem;
+            color: var(--dark-blue);
+        }
+        .section-header .line {
+            width: 50px;
+            height: 3px;
+            background: var(--tech-blue);
+            margin: 10px auto;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        .card:hover { transform: translateY(-5px); border-color: var(--tech-blue); }
+        
+        .card-icon {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--tech-blue);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .card h3 { margin-bottom: 0.5rem; color: var(--dark-blue); }
+        .card p { font-size: 0.95rem; color: var(--text-light); }
+        
+        .tech-tag {
+            display: inline-block;
+            background: var(--metal-gray);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-top: 1rem;
+        }
+
+        /* --- Interactive Visual --- */
+        .visual-section {
+            background-color: var(--metal-gray);
+            padding: 4rem 5%;
+        }
+
+        .diagram-wrapper {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: var(--shadow);
+        }
+
+        /* SVG Styles specific for Trussing */
+        .truss-svg { width: 100%; height: auto; max-height: 220px; }
+        .chord { stroke: #2c3e50; stroke-width: 6; stroke-linecap: round; }
+        .webbing { stroke: #3498db; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+        .coupler { fill: #95a5a6; }
+        .dim-line { stroke: #7f8c8d; stroke-width: 1; stroke-dasharray: 4; }
+        .dim-text { font-size: 12px; fill: #7f8c8d; font-family: monospace; }
+
+        /* --- Load Table --- */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 2rem;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        th {
+            background-color: var(--dark-blue);
+            color: var(--white);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            color: var(--text-main);
+        }
+
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        
+        .highlight { color: var(--primary-blue); font-weight: 700; }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--dark-blue);
+            color: #bdc3c7;
+            text-align: center;
+            padding: 3rem 0;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="brand">AV<span>Truss</span>.eng</div>
+        <a href="#contact" class="cta-btn">Request Quote</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="specs-badge">Material: Aluminum Alloy EN AW-6082 T6</div>
+        <h1>Performance Rigging Solutions</h1>
+        <p>Engineered aluminum truss systems for concert staging, trade show exhibits, and architectural installations.</p>
+        <a href="#specs" class="cta-btn" style="background:white; color:var(--primary-blue)">View Load Tables</a>
+    </header>
+
+    <!-- Truss Types -->
+    <section class="container">
+        <div class="section-header">
+            <h2>Standard Profiles</h2>
+            <div class="line"></div>
+            <p style="color:var(--text-light)">Industry standard configurations for the AV and Entertainment sector.</p>
+        </div>
+
+        <div class="grid-3">
+            <!-- Ladder -->
+            <div class="card">
+                <span class="card-icon">||</span>
+                <h3>Ladder Truss (F32)</h3>
+                <p>Two-chord flat system. Ideal for decorative applications, lightweight banner frames, and low-clearance grid ceilings.</p>
+                <span class="tech-tag">290mm Width</span>
+                <span class="tech-tag">Light Duty</span>
+            </div>
+
+            <!-- Triangle -->
+            <div class="card">
+                <span class="card-icon">▽</span>
+                <h3>Triangle Truss (F33)</h3>
+                <p>Three-chord system providing excellent structural stability with reduced weight. Frequently used for corners and decorative archways.</p>
+                <span class="tech-tag">290mm Width</span>
+                <span class="tech-tag">Medium Duty</span>
+            </div>
+
+            <!-- Box -->
+            <div class="card">
+                <span class="card-icon">□</span>
+                <h3>Box Truss (F34)</h3>
+                <p>Four-chord square system. The industry standard for stage roofing, lighting grids, and ground support towers due to high load capacity.</p>
+                <span class="tech-tag">290mm Width</span>
+                <span class="tech-tag">Heavy Duty</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Diagram -->
+    <section class="visual-section">
+        <div class="section-header">
+            <h2>Technical Schematics</h2>
+            <div class="line"></div>
+        </div>
+
+        <div class="diagram-wrapper">
+            <h4 style="margin-bottom:1rem; color:var(--dark-blue)">F34 Global Standard (Side Profile)</h4>
+            
+            <!-- SVG Diagram of Box Truss Side View -->
+            <svg class="truss-svg" viewBox="0 0 800 200">
+                <!-- Top Chord -->
+                <line x1="50" y1="50" x2="750" y2="50" class="chord" />
+                <!-- Bottom Chord -->
+                <line x1="50" y1="150" x2="750" y2="150" class="chord" />
+                
+                <!-- Webbing (Zig Zag / Warren Style) -->
+                <polyline points="50,150 100,50 150,150 200,50 250,150 300,50 350,150 400,50 450,150 500,50 550,150 600,50 650,150 700,50 750,150" class="webbing" />
+                
+                <!-- Couplers (Spigots) -->
+                <rect x="20" y="40" width="30" height="20" rx="3" class="coupler" />
+                <rect x="20" y="140" width="30" height="20" rx="3" class="coupler" />
+                <rect x="750" y="40" width="30" height="20" rx="3" class="coupler" />
+                <rect x="750" y="140" width="30" height="20" rx="3" class="coupler" />
+
+                <!-- Dimensions -->
+                <line x1="770" y1="50" x2="770" y2="150" class="dim-line" />
+                <text x="780" y="105" class="dim-text" style="writing-mode: tb;">290mm</text>
+                
+                <line x1="50" y1="170" x2="750" y2="170" class="dim-line" />
+                <text x="400" y="185" class="dim-text" text-anchor="middle">Variable Length (0.5m - 3.0m)</text>
+
+                <!-- Labels -->
+                <text x="100" y="35" class="dim-text">Main Tube: 50mm x 2mm</text>
+                <text x="100" y="135" class="dim-text">Brace: 20mm x 2mm</text>
+            </svg>
+            <p style="margin-top:1.5rem; font-size:0.9rem; color:#666;">
+                <strong>Connection Type:</strong> Conical Coupler (Spigot) with Tapered Pins.<br>
+                Material verified to DIN 4113-1 specifications.
+            </p>
+        </div>
+    </section>
+
+    <!-- Load Table Section -->
+    <section id="specs" class="container">
+        <div class="section-header">
+            <h2>Allowable Loading Data</h2>
+            <div class="line"></div>
+            <p>Data based on standard 290mm Square Truss (Alloy 6082-T6)</p>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Span (Meters)</th>
+                        <th>Span (Feet)</th>
+                        <th>Uniform Load (kg/m)</th>
+                        <th>Center Point Load (kg)</th>
+                        <th>Deflection (mm)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="highlight">3.0 m</td>
+                        <td>9.8 ft</td>
+                        <td>500 kg/m</td>
+                        <td>850 kg</td>
+                        <td>12 mm</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">6.0 m</td>
+                        <td>19.7 ft</td>
+                        <td>130 kg/m</td>
+                        <td>390 kg</td>
+                        <td>42 mm</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">9.0 m</td>
+                        <td>29.5 ft</td>
+                        <td>60 kg/m</td>
+                        <td>260 kg</td>
+                        <td>95 mm</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">12.0 m</td>
+                        <td>39.4 ft</td>
+                        <td>35 kg/m</td>
+                        <td>200 kg</td>
+                        <td>150 mm</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="font-size:0.8rem; color:#888; margin-top:1rem; text-align:right;">
+            *Loads are indicative for static conditions only. Always consult a certified rigger or structural engineer.
+        </p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div style="padding: 0 5%;">
+            <h3>AV Truss Engineering</h3>
+            <p>Providing the backbone for events worldwide.</p>
+            <br>
+            <a href="#" class="cta-btn" id="contact">Contact Engineer</a>
+            <p style="margin-top:2rem; opacity:0.6;">&copy; 2025 Audio Visual Structural Systems.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
